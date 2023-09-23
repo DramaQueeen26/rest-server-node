@@ -1,0 +1,28 @@
+{
+  "name": "rest-web-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsnd --respawn --clear src/app.ts",
+    "build": "rimraf ./dist && tsc",
+    "start": "npm run build && node dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DramaQueeen26/rest-web-node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DramaQueeen26/rest-web-node/issues"
+  },
+  "homepage": "https://github.com/DramaQueeen26/rest-web-node#readme",
+  "devDependencies": {
+    "@types/node": "^20.6.3",
+    "rimraf": "^5.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
+}
