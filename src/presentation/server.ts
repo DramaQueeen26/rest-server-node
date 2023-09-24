@@ -28,6 +28,8 @@ export class Server {
     this.app.listen( this.port, () => {
 
       //* Middlewares
+      this.app.use( express.json() ) // ? raw
+      this.app.use( express.urlencoded({ extended: true }) ) // ? x-www-form-urlencoded
 
       //* Public folder
       this.app.use( express.static( this.publicPath ) )

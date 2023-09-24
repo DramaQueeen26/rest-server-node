@@ -30,4 +30,12 @@ export class TodosController {
 
   }
 
+  public createTodo = (req: Request, res: Response) => {
+
+    const text = req.body.text
+
+    return res.json(text)
+
+  }
+
 }
