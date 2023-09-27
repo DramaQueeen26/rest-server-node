@@ -11,7 +11,9 @@ export class TodosController {
 
   constructor() {}
 
-  public getTodos = (req: Request, res: Response) => {
+  public getTodos = async (req: Request, res: Response) => {
+
+    const todos = await prisma.todo.findMany()
 
     return res.json(todos)
 
