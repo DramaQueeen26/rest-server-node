@@ -1,12 +1,6 @@
 import { Request, Response } from "express"
 import { prisma } from "../../data/postgres"
 
-const todos = [
-  {id: 1, text: 'buy milk', completedAt: new Date()},
-  {id: 2, text: 'buy bread', completedAt: null},
-  {id: 3, text: 'buy butter', completedAt: new Date()}
-]
-
 export class TodosController {
 
   constructor() {}
@@ -48,7 +42,7 @@ export class TodosController {
     const id = +req.params.id
     if( isNaN(id) ) return res.status(400).json({ error: `ID argument is not a number` })
     
-    const todo = await prisma.todo.findMany({where: { id }});
+    const todo = await prisma.todo.findMany({where: { id }})
     if(!todo) return res.status(404).json({ error: `Todo with id ${ id } not found` })
   
     const completedAt = req.body.completedAt ? new Date( req.body.completedAt ) : null
@@ -61,16 +55,16 @@ export class TodosController {
 
   }
 
-  public deleteTodo = (req: Request, res: Response) => {
+  public deleteTodo = async (req: Request, res: Response) => {
 
     const id = +req.params.id
 
     if( isNaN(id) ) return res.status(400).json({ error: `ID argument is not a number` })
 
-    const todo = todos.find( todo => todo.id === id);
+    const todo = await prisma.todo.findMany({where: { id }})
     if(!todo) return res.status(404).json({ error: `Todo with id ${ id } not found` })
 
-    todos.splice( todos.indexOf( todo ), 1 )
+    await prisma.todo.delete({where: {id}})
 
     res.json(todo)
 
