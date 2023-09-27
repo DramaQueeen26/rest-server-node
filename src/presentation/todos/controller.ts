@@ -19,7 +19,7 @@ export class TodosController {
 
     if( isNaN(id) ) return res.status(400).json({ error: `ID argument is not a number` })
 
-    const todo = await prisma.todo.findMany({where: { id }})
+    const todo = await prisma.todo.findFirst({where: { id }})
 
     return res.json(todo)
 
@@ -42,12 +42,12 @@ export class TodosController {
     const id = +req.params.id
     if( isNaN(id) ) return res.status(400).json({ error: `ID argument is not a number` })
     
-    const todo = await prisma.todo.findMany({where: { id }})
+    const todo = await prisma.todo.findFirst({where: { id }})
     if(!todo) return res.status(404).json({ error: `Todo with id ${ id } not found` })
   
     const completedAt = req.body.completedAt ? new Date( req.body.completedAt ) : null
 
-    const text = req.body.text ? req.body.text : todo[0].text
+    const text = req.body.text ? req.body.text : todo.text
 
     const todoUpdate = await prisma.todo.update({data: { text, completedAt }, where: { id }})
 
@@ -61,12 +61,14 @@ export class TodosController {
 
     if( isNaN(id) ) return res.status(400).json({ error: `ID argument is not a number` })
 
-    const todo = await prisma.todo.findMany({where: { id }})
+    const todo = await prisma.todo.findFirst({where: { id }})
     if(!todo) return res.status(404).json({ error: `Todo with id ${ id } not found` })
 
-    await prisma.todo.delete({where: {id}})
+    const deleted = await prisma.todo.delete({where: {id}});
 
-    res.json(todo)
+    (deleted)
+    ? res.json({ msg: 'Deleted', todo })
+    : res.status(400).json({ error: 'Unexpected error'})
 
   }
 
