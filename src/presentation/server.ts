@@ -1,5 +1,5 @@
 import express, { Router } from 'express'
-import compression from 'compression';
+// import compression from 'compression'
 import path from 'path'
 
 interface Options {
@@ -31,7 +31,7 @@ export class Server {
       //* Middlewares
       this.app.use( express.json() ) // ? raw
       this.app.use( express.urlencoded({ extended: true }) ) // ? x-www-form-urlencoded
-      this.app.use( compression() ) // ? Use gzip compression (best practices)
+      // this.app.use( compression() ) // ? Use gzip compression (best practices)
 
       //* Public folder
       this.app.use( express.static( this.publicPath ) )
