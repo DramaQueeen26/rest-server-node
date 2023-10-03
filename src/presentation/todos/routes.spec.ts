@@ -8,7 +8,7 @@ describe( 'Todo route testing', () => {
 
   beforeAll( async () => {
     await testServer.start()
-  } )
+  })
 
   afterAll( () => {
     testServer.close()
@@ -107,12 +107,9 @@ describe( 'Todo route testing', () => {
 
   })
 
-
-
   test( 'should return an updated TODO api/todos/:id', async () => {
 
     const todo = await prisma.todo.create( { data: todo1 } )
-
 
     const { body } = await request( testServer.app )
       .put( `/api/todos/${ todo.id }` )
@@ -137,7 +134,6 @@ describe( 'Todo route testing', () => {
     expect( body ).toEqual( { error: 'Todo with id 999 not found' } )
 
   })
-
 
   test( 'should return an updated TODO only the date', async () => {
 
