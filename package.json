@@ -7,9 +7,11 @@
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/app.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "prisma:migrate:prod": "prisma migrate deploy",
+    "prisma:migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy",
+    "test": "npm run prisma:migrate:test && jest",
+    "test:watch": "npm run prisma:migrate:test && jest --watchAll --coverage",
+    "test:coverage": "npm run prisma:migrate:test && jest --coverage"
   },
   "repository": {
     "type": "git",
